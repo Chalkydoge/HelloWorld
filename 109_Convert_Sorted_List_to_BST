@@ -1,0 +1,21 @@
+TreeNode* sortedListToBST(ListNode* head) {
+    if(head==nullptr)
+        return nullptr;
+    if(head->next==nullptr)
+        return new TreeNode(head->val);
+
+    ListNode* prev=head;
+    ListNode* slow=prev;
+    ListNode* fast=prev;
+    while(fast!=nullptr&&fast->next!=nullptr){
+        prev=slow;
+        slow=slow->next;
+        fast=fast->next->next;
+    }
+    TreeNode* root=new TreeNode(slow->val);
+    ListNode* right=slow->next;
+    prev->next=nullptr;
+    root->left=sortedListToBST(head);
+    root->right=sortedListToBST(right);
+    return root;
+}
